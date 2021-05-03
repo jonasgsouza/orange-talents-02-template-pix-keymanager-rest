@@ -1,6 +1,5 @@
 package br.com.zup.edu.shared.exception
 
-import br.com.zup.edu.shared.exception.toHttpResponse
 import io.grpc.StatusRuntimeException
 import io.micronaut.context.annotation.Requirements
 import io.micronaut.context.annotation.Requires
@@ -24,7 +23,8 @@ class StatusRuntimeExceptionHandler(
             ErrorContext.builder(request)
                 .cause(exception)
                 .errorMessage(exception.status.description ?: "Unknow Error")
-                .build(), exception.toHttpResponse())
+                .build(), exception.toHttpResponse()
+        )
     }
 
 }
