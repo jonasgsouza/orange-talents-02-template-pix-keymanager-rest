@@ -8,6 +8,7 @@ import io.micronaut.http.MutableHttpResponse
 fun StatusRuntimeException.toHttpResponse(): MutableHttpResponse<*> {
     return when (status.code) {
         Status.ALREADY_EXISTS.code -> HttpResponse.unprocessableEntity<Any>()
+        Status.NOT_FOUND.code -> HttpResponse.notFound<Any>()
         else -> HttpResponse.serverError<Any>()
     }
 }

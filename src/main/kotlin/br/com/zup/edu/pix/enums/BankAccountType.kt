@@ -1,8 +1,8 @@
-package br.com.zup.edu.pix.registry.controller.enums
+package br.com.zup.edu.pix.enums
 
 import br.com.zup.edu.AccountTypeGrpc
 
-enum class BankAccounType {
+enum class BankAccountType {
     CONTA_CORRENTE,
     CONTA_POUPANCA;
 

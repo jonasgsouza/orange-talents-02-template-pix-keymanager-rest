@@ -1,31 +1,28 @@
-package br.com.zup.edu.pix.registry.controller.request
+package br.com.zup.edu.pix.registry.request
 
 import br.com.zup.edu.RegisterPixKeyRequestGrpc
-import br.com.zup.edu.pix.registry.controller.enums.BankAccounType
-import br.com.zup.edu.pix.registry.controller.enums.PixKeyType
+import br.com.zup.edu.pix.enums.BankAccountType
+import br.com.zup.edu.pix.enums.PixKeyType
 import br.com.zup.edu.shared.validation.ValidPixKey
-import br.com.zup.edu.shared.validation.ValidUUID
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.validation.validator.constraints.EmailValidator
+import java.util.*
 import javax.validation.constraints.NotNull
 
 @Introspected
 @ValidPixKey
 data class RegisterPixKeyRequest(
-    @field:ValidUUID
-    val clientId: String?,
-
     @field:NotNull
     val keyType: PixKeyType?,
 
     val keyValue: String?,
 
     @field:NotNull
-    val accountType: BankAccounType?
+    val accountType: BankAccountType?
 ) {
-    fun toRegisterPixKeyRequestGrpc(): RegisterPixKeyRequestGrpc {
+    fun toRegisterPixKeyRequestGrpc(clientId: UUID): RegisterPixKeyRequestGrpc {
         return RegisterPixKeyRequestGrpc.newBuilder()
-            .setClientId(clientId)
+            .setClientId(clientId.toString())
             .setKeyType(keyType?.toKeyTypeGrpc())
             .setKeyValue(keyValue ?: "")
             .setAccountType(accountType?.toAccountTypeGrpc())
