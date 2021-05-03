@@ -17,8 +17,7 @@ class RegisterPixKeyController(
 
     @Post
     fun registerPixKey(@Body @Valid request: RegisterPixKeyRequest): RegisterPixKeyResponse {
-        val response = grpcClient.registerKey(request.toRegisterPixKeyRequestGrpc())
-        return response.toRegisterPixKeyResponse()
+        return grpcClient.registerKey(request.toRegisterPixKeyRequestGrpc()).toRegisterPixKeyResponse()
     }
 
 }
