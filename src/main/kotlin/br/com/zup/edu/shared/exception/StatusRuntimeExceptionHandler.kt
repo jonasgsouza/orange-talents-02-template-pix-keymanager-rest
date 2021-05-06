@@ -23,7 +23,9 @@ class StatusRuntimeExceptionHandler(
             ErrorContext.builder(request)
                 .cause(exception)
                 .errorMessage(exception.status.description ?: "Unknow Error")
-                .build(), exception.toHttpResponse()
+                .errors(exception.getErrors())
+                .build(),
+            exception.toHttpResponse()
         )
     }
 

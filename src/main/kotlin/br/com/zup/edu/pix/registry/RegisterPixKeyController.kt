@@ -14,16 +14,21 @@ import java.util.*
 import javax.validation.Valid
 
 
-@Controller("api/{clientId}/pix")
 @Validated
+@Controller("api/{clientId}/pix")
 class RegisterPixKeyController(
     val grpcClient: RegisterPixKeyServiceGrpc.RegisterPixKeyServiceBlockingStub
 ) {
 
     @Post
-    fun registerPixKey(@PathVariable clientId: UUID, @Body @Valid request: RegisterPixKeyRequest, httpRequest: HttpRequest<*>): HttpResponse<RegisterPixKeyResponse> {
-        val response: RegisterPixKeyResponse =  grpcClient.registerKey(request.toRegisterPixKeyRequestGrpc(clientId)).toRegisterPixKeyResponse()
-        return HttpResponse.created(response, HttpResponse.uri("api/${clientId}/pix/${response.pixId}"))
+    fun registerPixKey(
+        @PathVariable clientId: UUID,
+        @Body @Valid request: RegisterPixKeyRequest,
+        httpRequest: HttpRequest<*>
+    ): HttpResponse<RegisterPixKeyResponse> {
+        val response: RegisterPixKeyResponse =
+            grpcClient.registerKey(request.toRegisterPixKeyRequestGrpc(clientId)).toRegisterPixKeyResponse()
+        return HttpResponse.created(response, HttpResponse.uri("${httpRequest.uri}/${response.pixId}"))
     }
 
 }
